@@ -1,0 +1,1 @@
+{\n  "build": {\n    "builder": "NIXPACKS"\n  },\n  "deploy": {\n    "startCommand": "python backend/poller.py",\n    "healthcheckPath": "/"\n  }\n}
