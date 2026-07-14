@@ -8,7 +8,7 @@ def extract_certifications(content, file_path, api_key):
     else:
         text = content.decode("utf-8", errors="replace")
     msg = client.messages.create(
-        model="claude-3-5-haiku-latest",
+        model="claude-haiku-4-5-20251001",
         max_tokens=4096,
         messages=[{"role": "user", "content": f"Extract certification records from this file. Return JSON array where each item has: title (str), status (one of: expired, expiring_soon, valid, missing), due_date (ISO date or null), details (dict). File content:\n{text[:8000]}"}]
     )
