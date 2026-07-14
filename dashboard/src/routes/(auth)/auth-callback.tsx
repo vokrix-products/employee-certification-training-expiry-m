@@ -10,13 +10,16 @@ function AuthCallback() {
   const navigate = useNavigate()
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
+      if (session) {
         navigate({ to: '/' })
-      } else if (event === 'SIGNED_OUT' || !session) {
-        setTimeout(() => navigate({ to: '/sign-up' }), 2000)
       }
     })
-    return () => subscription.unsubscribe()
+    // fallback after 5s
+    const timer = setTimeout(() => navigate({ to: '/sign-up' }), 5000)
+    return () => {
+      subscription.unsubscribe()
+      clearTimeout(timer)
+    }
   }, [navigate])
   return (
     <div className='flex h-screen items-center justify-center'>
