@@ -63,7 +63,7 @@ export function useUploadJob() {
       return null
     }
     // Trial check: block upload if no active subscription and record limit hit
-    if (!user.product_id) {
+    if (user.product_id !== import.meta.env.VITE_PRODUCT_ID) {
       const { data: jobs } = await supabase
         .from('jobs')
         .select('id')
@@ -120,7 +120,7 @@ export function useUploadJob() {
       return null
     }
     // Trial check
-    if (!user.product_id) {
+    if (user.product_id !== import.meta.env.VITE_PRODUCT_ID) {
       const { data: jobs } = await supabase
         .from('jobs')
         .select('id')
