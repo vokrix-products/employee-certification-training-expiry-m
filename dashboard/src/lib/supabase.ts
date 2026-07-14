@@ -9,7 +9,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
   )
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, { auth: { detectSessionInUrl: true } })
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, { auth: { flowType: "implicit", detectSessionInUrl: true } })
 
 // PRODUCT_CUSTOMIZE: every product deployment sets this at provisioning
 // time (Job Registry writes it as a Vercel env var for that product's
