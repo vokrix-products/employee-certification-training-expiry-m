@@ -9,7 +9,7 @@ export const Route = createFileRoute('/(auth)/auth-callback')({
 function AuthCallback() {
   const navigate = useNavigate()
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
         navigate({ to: '/' })
       }
