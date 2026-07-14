@@ -27,6 +27,7 @@ function Trend({ current, previous }: { current: number; previous: number }) {
   const diff = current - previous
   const pct = previous === 0 ? 100 : Math.round(Math.abs(diff / previous) * 100)
   if (diff === 0) return <span className='text-xs text-muted-foreground'>No change</span>
+
   return (
     <span className={diff > 0 ? 'text-xs text-success' : 'text-xs text-destructive'}>
       {diff > 0 ? '↑' : '↓'} {pct}% vs last week

@@ -26,23 +26,24 @@ import {
   type Job,
 } from '../data/jobs'
 
-const BILLING_WEBHOOK_URL = 'https://web-production-6adc6.up.railway.app'
-const PRICE_ID = (import.meta.env.VITE_STRIPE_PRICE_ID as string) ?? ''
-const PRODUCT_ID_VALUE = import.meta.env.VITE_PRODUCT_ID as string
+const BILLING_WEBHOOK_URL = 'https://web-production-6adc6.up.railway.app';
+const PRICE_ID = (import.meta.env.VITE_STRIPE_PRICE_ID as string) ?? '';
 
 async function openCheckout() {
-  const res = await fetch(`${BILLING_WEBHOOK_URL}/create-checkout-session`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      price_id: PRICE_ID,
-      product_id: PRODUCT_ID_VALUE,
-      success_url: window.location.origin + '?upgraded=true',
-      cancel_url: window.location.href,
-    }),
-  })
-  const data = await res.json()
-  if (data.checkout_url) window.location.href = data.checkout_url
+  try {
+    const res = await fetch(BILLING_WEBHOOK_URL + '/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        price_id: PRICE_ID,
+        product_id: import.meta.env.VITE_PRODUCT_ID,
+        success_url: 'https://employee-certificati.vokrix.co?upgraded=true',
+        cancel_url: 'https://employee-certificati.vokrix.co',
+      }),
+    });
+    const data = await res.json();
+    if (data.checkout_url) window.location.href = data.checkout_url;
+  } catch (err) { console.error(err); }
 }
 
 function PaywallModal({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -68,9 +69,8 @@ function PaywallModal({ open, onClose }: { open: boolean; onClose: () => void })
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
-
 function statusBadgeVariant(
   status: string
 ): 'default' | 'secondary' | 'destructive' | 'outline' {
