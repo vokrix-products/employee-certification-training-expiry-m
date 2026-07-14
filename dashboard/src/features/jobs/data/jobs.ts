@@ -68,6 +68,7 @@ export function useUploadJob() {
         .from('jobs')
         .select('id')
         .eq('customer_id', user.id)
+        .eq('product_id', PRODUCT_ID)
         .in('status', ['pending','processing','completed'])
       const count = jobs?.length || 0
       if (count >= TRIAL_LIMIT) {
@@ -125,6 +126,7 @@ export function useUploadJob() {
         .from('jobs')
         .select('id')
         .eq('customer_id', user.id)
+        .eq('product_id', PRODUCT_ID)
         .in('status', ['pending','processing','completed'])
       const count = jobs?.length || 0
       if (count >= TRIAL_LIMIT) {
