@@ -9,16 +9,19 @@ export const Route = createFileRoute('/(auth)/auth-callback')({
 function AuthCallback() {
   const navigate = useNavigate()
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        navigate({ to: '/' })
+    const hash = window.location.hash
+    if (hash && hash.includes('access_token')) {
+      const params = new URLSearchParams(hash.slice(1))
+      const access_token = params.get('access_token')
+      const refresh_token = params.get('refresh_token')
+      if (access_token && refresh_token) {
+        supabase.auth.setSession({ access_token, refresh_token }).then(({ error }) => {
+          if (error) navigate({ to: '/sign-up' })
+          else navigate({ to: '/' })
+        })
       }
-    })
-    // fallback after 5s
-    const timer = setTimeout(() => navigate({ to: '/sign-up' }), 5000)
-    return () => {
-      subscription.unsubscribe()
-      clearTimeout(timer)
+    } else {
+      navigate({ to: '/sign-up' })
     }
   }, [navigate])
   return (
