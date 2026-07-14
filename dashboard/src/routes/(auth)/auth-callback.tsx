@@ -9,13 +9,13 @@ export const Route = createFileRoute('/(auth)/auth-callback')({
 function AuthCallback() {
   const navigate = useNavigate()
   useEffect(() => {
-    // detectSessionInUrl processes #access_token automatically
-    // just wait for it then navigate
+    console.log('auth-callback mounted, hash:', window.location.hash.slice(0, 50))
     const timer = setTimeout(async () => {
-      const { data } = await supabase.auth.getSession()
+      const { data, error } = await supabase.auth.getSession()
+      console.log('session:', data.session?.user?.email, 'error:', error?.message)
       if (data.session) navigate({ to: '/' })
       else navigate({ to: '/sign-up' })
-    }, 1500)
+    }, 2000)
     return () => clearTimeout(timer)
   }, [navigate])
   return (
