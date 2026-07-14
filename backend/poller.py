@@ -80,9 +80,9 @@ def main():
             update_job(job["id"], status="processing")
             try:
                 result_path, summary = process(job)
-                update_job(job["id"], status="completed", output_file_path=result_path, summary=summary)
+                update_job(job["id"], status="completed", output_file_path=result_path, result_summary=summary)
             except Exception as e:
-                update_job(job["id"], status="error", summary=str(e))
+                update_job(job["id"], status="failed", result_summary=str(e))
         time.sleep(10)
 
 if __name__ == "__main__":
