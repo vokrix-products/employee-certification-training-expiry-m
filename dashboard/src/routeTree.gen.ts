@@ -18,6 +18,7 @@ import { Route as errors403RouteImport } from './routes/(errors)/403'
 import { Route as errors401RouteImport } from './routes/(errors)/401'
 import { Route as authSignUpRouteImport } from './routes/(auth)/sign-up'
 import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
+import { Route as authAuthCallbackRouteImport } from './routes/(auth)/auth-callback'
 import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authenticated/settings/route'
 import { Route as AuthenticatedTasksIndexRouteImport } from './routes/_authenticated/tasks/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
@@ -71,6 +72,11 @@ const authSignInRoute = authSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authAuthCallbackRoute = authAuthCallbackRouteImport.update({
+  id: '/(auth)/auth-callback',
+  path: '/auth-callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedSettingsRouteRoute =
   AuthenticatedSettingsRouteRouteImport.update({
     id: '/settings',
@@ -122,6 +128,7 @@ const AuthenticatedErrorsErrorRoute =
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
+  '/auth-callback': typeof authAuthCallbackRoute
   '/sign-in': typeof authSignInRoute
   '/sign-up': typeof authSignUpRoute
   '/401': typeof errors401Route
@@ -138,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/tasks/': typeof AuthenticatedTasksIndexRoute
 }
 export interface FileRoutesByTo {
+  '/auth-callback': typeof authAuthCallbackRoute
   '/sign-in': typeof authSignInRoute
   '/sign-up': typeof authSignUpRoute
   '/401': typeof errors401Route
@@ -158,6 +166,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_authenticated/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
+  '/(auth)/auth-callback': typeof authAuthCallbackRoute
   '/(auth)/sign-in': typeof authSignInRoute
   '/(auth)/sign-up': typeof authSignUpRoute
   '/(errors)/401': typeof errors401Route
@@ -179,6 +188,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/settings'
+    | '/auth-callback'
     | '/sign-in'
     | '/sign-up'
     | '/401'
@@ -195,6 +205,7 @@ export interface FileRouteTypes {
     | '/tasks/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/auth-callback'
     | '/sign-in'
     | '/sign-up'
     | '/401'
@@ -214,6 +225,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_authenticated'
     | '/_authenticated/settings'
+    | '/(auth)/auth-callback'
     | '/(auth)/sign-in'
     | '/(auth)/sign-up'
     | '/(errors)/401'
@@ -233,6 +245,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  authAuthCallbackRoute: typeof authAuthCallbackRoute
   authSignInRoute: typeof authSignInRoute
   authSignUpRoute: typeof authSignUpRoute
   errors401Route: typeof errors401Route
@@ -305,6 +318,13 @@ declare module '@tanstack/react-router' {
       path: '/sign-in'
       fullPath: '/sign-in'
       preLoaderRoute: typeof authSignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/auth-callback': {
+      id: '/(auth)/auth-callback'
+      path: '/auth-callback'
+      fullPath: '/auth-callback'
+      preLoaderRoute: typeof authAuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/settings': {
@@ -408,6 +428,7 @@ const AuthenticatedRouteRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  authAuthCallbackRoute: authAuthCallbackRoute,
   authSignInRoute: authSignInRoute,
   authSignUpRoute: authSignUpRoute,
   errors401Route: errors401Route,
