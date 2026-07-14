@@ -9,17 +9,14 @@ export const Route = createFileRoute('/(auth)/auth-callback')({
 function AuthCallback() {
   const navigate = useNavigate()
   useEffect(() => {
-    const code = new URLSearchParams(window.location.search).get('code')
-    if (code) {
-      supabase.auth.exchangeCodeForSession(code).then(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
         navigate({ to: '/' })
-      })
-    } else {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) navigate({ to: '/' })
-        else navigate({ to: '/sign-up' })
-      })
-    }
+      } else if (event === 'SIGNED_OUT' || !session) {
+        setTimeout(() => navigate({ to: '/sign-up' }), 2000)
+      }
+    })
+    return () => subscription.unsubscribe()
   }, [navigate])
   return (
     <div className='flex h-screen items-center justify-center'>
