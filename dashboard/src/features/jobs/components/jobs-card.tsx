@@ -51,9 +51,9 @@ function PaywallModal({ open, onClose }: { open: boolean; onClose: () => void })
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>You've used your 3 free contracts</DialogTitle>
+          <DialogTitle>You've used your 3 free uploads</DialogTitle>
           <DialogDescription>
-            Upgrade to monitor unlimited contracts and get renewal alerts automatically.
+            Upgrade to get unlimited uploads and full access.
           </DialogDescription>
         </DialogHeader>
         <div className='space-y-4 pt-2'>
