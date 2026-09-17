@@ -23,3 +23,5 @@ Railway: employee-certification-training-expiry-m
 Cloudflare: employee-certification-training-expiry-m.vokrix.co
 
 Billing: price_1UGf2p2c9uGCcgMS1g5sAiWq
+
+Landing: https://vokrix.co/employee-certification-training-expiry-m
