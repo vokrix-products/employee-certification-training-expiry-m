@@ -20,3 +20,4 @@ npm run dev
 ```
 Railway: employee-certification-training-expiry-m
 Railway: employee-certification-training-expiry-m
+Cloudflare: employee-certification-training-expiry-m.vokrix.co
